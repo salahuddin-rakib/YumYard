@@ -2,7 +2,8 @@ class FoodsController < ApplicationController
   before_action :find_food, only: [:update]
 
   def index
-    foods = Food.all.select(:id, :name, :image_url, :stock_quantity, :price, :category)
+    foods = filter_foods # Filter implementation
+    foods = foods.select(:id, :name, :image_url, :stock_quantity, :price, :category)
     @foods = paginate_records(foods, params) # Pagination
     render json: { message: 'Successfully fetched food list.', foods: @foods, total: foods.size }, adapter: :json, key_transform: :camel_lower, root: false
   rescue => error
@@ -32,9 +33,30 @@ class FoodsController < ApplicationController
     params.permit(:id, :name, :image_url, :stock_quantity, :price, :category)
   end
 
+  def filter_params
+    params.permit(:name, :price, :price_compare_operator, :category)
+  end
+
   def find_food
     @food = Food.find(permitted_params[:id])
   rescue => _e
     render json: { message: 'Unable to find food.' }, status: :not_found
+  end
+
+  def filter_foods
+    foods = Food.all
+    if filter_params[:name].present?
+      foods = foods.search_by_name(filter_params[:name])
+    end
+
+    if filter_params[:price].present? && filter_params[:price_compare_operator].present? && %w(< = >).include?(filter_params[:price_compare_operator])
+      foods = foods.search_by_price(filter_params[:price], filter_params[:price_compare_operator])
+    end
+
+    if filter_params[:category].present? && Food.categories.keys.include?(filter_params[:category])
+      foods = foods.search_by_category(filter_params[:category])
+    end
+
+    foods
   end
 end
