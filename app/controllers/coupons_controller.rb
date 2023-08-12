@@ -2,11 +2,10 @@ class CouponsController < ApplicationController
   before_action :find_coupon, only: [:destroy]
 
   def create
-    coupon = Coupon.new(
+    coupon = Coupon.create!(
       food_id: permitted_params[:food_id],
       offer_amount: permitted_params[:offer_amount]
     )
-    coupon.save!
     render json: { message: 'Successfully created coupon.', coupon: coupon }, status: :created, adapter: :json, key_transform: :camel_lower, root: false
   rescue => error
     Rails.logger.error "\nUnable to create coupon due to: #{error.message}\n"
