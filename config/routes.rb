@@ -14,4 +14,9 @@ Rails.application.routes.draw do
 
   resources :foods, path: '/foods', only: [:index, :create, :update]
   resources :coupons, path: '/coupons', only: [:create, :destroy]
+  resources :orders, path: 'api/', only: [] do
+    collection do
+      post ':food_id/process_order', to: 'orders#process_order'
+    end
+  end
 end
