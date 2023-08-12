@@ -31,3 +31,4 @@
 /config/credentials.yml.enc
 /log/
 /tmp/
+/.idea
