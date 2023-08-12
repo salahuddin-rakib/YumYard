@@ -1,12 +1,12 @@
 class OrdersController < ApplicationController
-  before_action :find_food, only: [:order]
+  before_action :find_food, only: [:process_order]
 
   def process_order
     coupon = Coupon.find_by(token: permitted_params[:coupon_token])
-    if permitted_params[:coupon_token].present? && (coupon.blank? || coupon.is_expired?)
+    if permitted_params[:coupon_token].present? && (coupon.blank? || (coupon.food != @food) || coupon.is_expired?)
       render json: { message: 'Please give a valid coupon.' }, status: :not_acceptable
-    elsif params[:total_ordered] > @food.stock_quantity
-      render json: { message: "We do not have #{permitted_params[:total_ordered]} quantity of #{@food.name}."}, status: :not_acceptable
+    elsif permitted_params[:total_ordered].to_i > @food.stock_quantity
+      render json: { message: "We do not have #{permitted_params[:total_ordered]} quantity of #{@food.name}." }, status: :not_acceptable
     else
       return_flag = Order.place(@food, coupon, permitted_params)
       if return_flag

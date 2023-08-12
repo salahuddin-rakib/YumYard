@@ -31,7 +31,8 @@ class Coupon < ApplicationRecord
   end
 
   def check_if_active_coupon_exist
-    if Coupon.find_by(food_id: self.food_id, status: :active)
+    coupon = Coupon.find_by(food_id: self.food_id, status: :active)
+    if coupon && coupon.id != self.id
       errors.add(:base, "Active coupon already exist.")
     end
   end

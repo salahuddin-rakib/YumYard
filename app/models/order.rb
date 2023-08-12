@@ -9,13 +9,14 @@ class Order < ApplicationRecord
   # class methods
   def self.place(food, coupon, params)
     return_flag = false
+    total_ordered = params[:total_ordered].to_i
     ActiveRecord::Base.transaction do
       food.orders.create!(
-        quantity: params[total_ordered],
+        quantity: params[:total_ordered],
         coupon: coupon,
-        total_price: (price * params[total_ordered]) - coupon&.offer_amount || 0,
+        total_price: (params[:price].to_f * total_ordered) - (coupon&.offer_amount || 0),
         )
-      food.update!(stock_quantity: food.stock_quantity - params[:total_ordered])
+      food.update!(stock_quantity: food.stock_quantity - total_ordered)
       return_flag = true
     end
     return_flag
