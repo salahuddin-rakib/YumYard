@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::API
 
   def paginate_records(records, params)
+    return [] if records.blank?
+
     page = params.fetch(:page, 0).to_i
     limit = params.fetch(:limit, 10).to_i
     offset = page * limit
