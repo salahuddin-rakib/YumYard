@@ -11,15 +11,15 @@ class FoodsController < ApplicationController
   end
 
   def create
-    Food.create(permitted_params)
-    render json: { message: 'Successfully created food.' }, adapter: :json, key_transform: :camel_lower, root: false
+    Food.create!(permitted_params)
+    render json: { message: 'Successfully created food.' }, status: :created, root: false
   rescue => error
     Rails.logger.error "\nUnable to create food due to: #{error.message}\n"
     render json: { message: 'Unable to create food.' }, status: :unprocessable_entity
   end
 
   def update
-    @food.update(permitted_params)
+    @food.update!(permitted_params)
     render json: { message: 'Successfully updated food.' }, adapter: :json, key_transform: :camel_lower, root: false
   rescue => error
     Rails.logger.error "\nUnable to update food due to: #{error.message}\n"
