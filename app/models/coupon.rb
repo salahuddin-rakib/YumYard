@@ -11,7 +11,7 @@ class Coupon < ApplicationRecord
   validate :check_if_active_coupon_exist
   validate :check_offer_amount
 
-  validates :offer_amount, numericality: { greater_than_or_equal_to: 0 }
+  validates :offer_amount, numericality: { greater_than_or_equal_to: 1 }
 
   # Enumerable:
   enum status: { active: 0, disabled: 1 }
