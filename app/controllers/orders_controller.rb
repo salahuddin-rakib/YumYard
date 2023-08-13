@@ -10,7 +10,7 @@ class OrdersController < ApplicationController
     else
       return_flag = Order.place(@food, coupon, permitted_params)
       if return_flag
-        render json: { message: 'Order place successful.' }, status: :ok
+        render json: { message: 'Order placed successfully.' }, status: :ok
       else
         render json: { message: 'Unable to place order.' }, status: :unprocessable_entity
       end

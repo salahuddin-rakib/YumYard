@@ -4,7 +4,7 @@ class ApplicationController < ActionController::API
     return [] if records.blank?
 
     page = params.fetch(:page, 0).to_i
-    limit = params.fetch(:limit, 10).to_i
+    limit = params.fetch(:per_page, 10).to_i
     offset = page * limit
 
     records.limit(limit).offset(offset)
