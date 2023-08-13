@@ -21,6 +21,7 @@ require 'rspec/rails'
 # require only the support files necessary.
 #
 Dir[Rails.root.join('spec', 'factories', '**', '*.rb')].sort.each { |f| require f }
+Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 # Checks for pending migrations and applies them before tests are run.
 # If you are not using ActiveRecord, you can remove these lines.
@@ -30,6 +31,9 @@ rescue ActiveRecord::PendingMigrationError => e
   abort e.to_s.strip
 end
 RSpec.configure do |config|
+  # Adding external files
+  config.include ApiHelpers
+
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
