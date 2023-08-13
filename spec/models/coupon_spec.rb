@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe Food, type: :model do
-  let(:food) { create(:food) }
-  let!(:coupon) { create(:coupon, food:) }
+RSpec.describe Coupon, type: :model do
+  let(:food) { create(:food, price: 500) }
+  let!(:coupon) { create(:coupon, offer_amount: 200, food:) }
 
   it "offer_amount must be grater than 1" do
     expect(coupon.offer_amount).to be >= 1
