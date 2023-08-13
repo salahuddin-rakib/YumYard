@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :coupons do
+  factory :coupon do
     food
 
     offer_amount { rand(100..200) }

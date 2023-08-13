@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :food do
+  factory :order do
     food
     coupon
 
