@@ -1,0 +1,20 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: your_postgresql_username
+  password: your_postgresql_password
+
+development:
+  <<: *default
+  database: YumYard_development
+
+test:
+  <<: *default
+  database: YumYard_test
+
+#production:
+#  <<: *default
+#  database: YumYard_production
+#  username: YumYard
+#  password: <%#= ENV["YUMYARD_DATABASE_PASSWORD"] %>
