@@ -1,4 +1,11 @@
 module ApiHelpers
+  def as_json_body(params = {})
+    {
+      params: params.to_json,
+      headers: { CONTENT_TYPE: "application/json" }
+    }
+  end
+
   def json
     JSON.parse(response.body)
   end
