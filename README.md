@@ -59,7 +59,14 @@ Go to the project folder(`YumYard`) in terminal. After that run `rails s` comman
 run.
 ****
 
-## 4. Run test suite:
+## 4. Run seed file:
+
+****
+To run seed file go to the project folder(`YumYard`) in terminal. After that run `rails db:seed` command. Seed file will
+run and Foods and Coupons will be created.
+****
+
+## 5. Run test suite:
 
 ****
 To run test suite just run `rspec spec` in the project folder terminal.
